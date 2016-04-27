@@ -1,38 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Assignment: Caching the Inverse of a Matrix
 
-## Write a short comment describing this function
+## The first function creates a matrix cache variable that stores previously seen matrices
 
 makeCacheMatrix <- function(x = matrix()) {
-  cache <- NULL
-
+  matrix_cache <- NULL
+  
   set <- function(y) {
-          x <<- y
-          m <<- NULL
+    x <<- y
+    matrix_cache <<- NULL
   }
   get <- function() x
-
-  setimatrix <- function(matrix) cache <<- matrix
-  getimatrix <- function() cache
-
-  list(set = set, get = get, setimatrix = setimatrix, getimatrix = getimatrix)
+  
+  setMatrixCache <- function(matrix) matrix_cache <<- matrix
+  getMatrixCache <- function() matrix_cache
+  
+  list(set = set, get = get, setMatrixCache = setMatrixCache, getMatrixCache = getMatrixCache)
 }
 
-
-## Write a short comment describing this function
+## Retrieve the inverse matrix from the matrix cache, if possible - or add it to the cache
 
 cacheSolve <- function(x, ...) {
-  cache <- x$getimatrix()
+  matrix_cache <- x$getMatrixCache()
 
-  if (!is.null(cache)) {
-    print("Getting chached data")
-    return(cache)
+  if (!is.null(matrix_cache)) {
+    message("getting cached data")
+    return(matrix_cache)
   }
-
+  
   matrix <- x$get()
-  cache <- solve(matrix, ...)
-  x$setimatrix
-  cache
+  matrix_cache <- solve(matrix, ...)
+  x$setMatrixCache(matrix_cache)
+  matrix_cache
 }
-
-cacheSolve()
